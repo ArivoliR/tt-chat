@@ -32,6 +32,11 @@ The point of this exercise isn't to get the questions "right" — it's to notice
 the gap between how you *think* you learn and how you actually do, so you can
 close it.
 
+## Plan to Learn:
+Starting off with g++, revising the compiler flags that I already know from my notes. Plan on doing the same for Make, and I'll read the man pages for both as well. I'm pretty confident with my grasp on git so I would normally just look through the commands once (man page mostly). But the brief here says, `as deeply as you can`, so I'll spend some time revising/learning from the first few chapters of the pro git book. For sockets I'll find some reference (Beej Networking guide was mentioned someone so I'll look into that), and look through the material that was provided in notion from Tinkercademy. I'll also read documentation for the socket functions. For memory management there were resources in notion that I already read, I'll skim through them again.
+
+The order would be: g++, make, sockets, memory management, git. I would comfortably assume I've understood something well enough when I'm able to explain it without double guessing myself, and use the concept/command without doubt. Rewriting code or trying commands out from tutorials, helps me. I did that with learncpp to learn c++ as well.
+
 ## Learning How to Learn
 
 - Answer the following questions in this file and commit and push your changes.
@@ -39,6 +44,11 @@ close it.
 - How can you find the information required to complete these tasks?
 - How can you tell if the source of your information is good?
 - How would you define "good" in this situation?
+
+#### Answers
+- I used to google for references, but recently I've started using perplexity or chatgpt for the same, and it works pretty well. Sometimes when it doesn't or I'm not satisfied, I pivot the searching through google again. Asking an LLM helps because I can ask for suggestions on how to cover which material, and I check if whether it makes sense to do that, and often times its very helpful.
+- I usually trust reputed pages, like, say geeksforgeeks, or cppreference, or blogs/videos from reputed authors (like say Herb Sutter for C++). Official documentation sources are always trustworthy.
+- One way of looking at it would be, correctness perspective. In which case, official documentation is unbeaten, but it is often not very readable or beginner friendly. Unofficial documentations like cppreference that have a good reputation would be a better alternative for learning.
 
 ## Learn Basics of g++ CLI
 
@@ -49,6 +59,21 @@ close it.
 - What arguments would you use in a debug build?
 - What about for release?
 - What other kinds of build types are useful?
+
+#### Answers
+- Compilation done 
+- Most important g++ command line arguments are -O, -o, -g, -I.
+- -O is used for optimization, -O0, -O1, -O2, -O3, -Og to control the optimization level with -O3 being highest
+- -o for setting name of output binary 
+- -g for enabling debug symbols, and -I for include path of header files 
+- theres also -std= that lets you pick which c++ version to use. 
+
+- Debug version is for development. Generally compiled with debug symbols and zero optimization. Release build is compiled with optimizations and debug symbols are removed. 
+- Debug build is a bit slower than the Release build, but in return in debug build, since we have debug symbols, it is easier to to debug any bugs. Code to assembly comparison looks much simpler in debug mode, and it is easy to spot any issues. In release build, the execution is much faster because of compiler optimizations and the file size is also smaller.
+- I would use -g to enable debug symbols for debug build. If needed, -Wall and -Wextra to check if there is any unintentional mistake in code. 
+- Wall shows common warning messages, and Wextra shows additional warnings on top of -Wall. 
+- I would use -O3 to optimize for release build. 
+- I've used -ASan (Address sanitizer) in some builds in HPX(an open source org that I contribute to). This build is used to find memory bugs. There's also -Og which optimizes but keeps debug symbols on. 
 
 ## Learn Basics of Make
 
@@ -67,6 +92,16 @@ close it.
 - What are the most important directives to learn about in Makefile?
 - What are the most important commands to implement in your Makefile?
 - Which ones are essential, which ones are nice to haves?
+
+#### Answers 
+- Makefile done 
+- Making our own Makefiles, or reading simple existing ones. The Makefile in the xv6 OS was not too simple and not too hard at the same time. Understanding what that Makefile was doing, helped me learn Make deeply. 
+- Like I mentioned earlier, I generally write the examples down on my own and test it. If these work as intended, the resource I'm using is probably right. The website's reputation and author reputation play a role too of course. 
+
+- -n for dry run(shows what would run without executing), -B for force rebuild, -f to choose the Makefile, and -j for speed. (-j4 runs the build with 4 threads). 
+- .PHONY, variables, pattern rules, targets are important to learn 
+- default target and clean target are the most important commands to implement in Makefile 
+- Essentials parts are the default target, clean target, and dependencies. Its nice to have separate debug and release targets, pattern rules etc. 
 
 ## Learn Basics of Git
 

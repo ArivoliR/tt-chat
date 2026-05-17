@@ -6,12 +6,22 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-int main() {
+int main(int argc, char *argv[]) {
   // #Question - are these the same type?
   //
   // #Answer - No they are not the same type. LHS is std::string object RHS is a
-  // C-style string. LHS should be replaced with string_view
-  std::string message = "Hello from client";
+  // C-style string. std::string copies and owns the string.
+  // std::string message = "Hello from client";
+
+  if (argc < 2) {
+    std::cerr << "Usage: " << argv[0] << " <message>\n";
+    return 1;
+  }
+
+  std::string message = argv[1];
+
+  std::cout << message << '\n';
+
   const int kPort = 8080;
   const std::string kServerAddress = "127.0.0.1";
   sockaddr_in address;

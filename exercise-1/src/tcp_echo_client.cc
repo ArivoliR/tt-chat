@@ -8,6 +8,9 @@
 
 int main() {
   // #Question - are these the same type?
+  //
+  // #Answer - No they are not the same type. LHS is std::string object RHS is a
+  // C-style string. LHS should be replaced with string_view
   std::string message = "Hello from client";
   const int kPort = 8080;
   const std::string kServerAddress = "127.0.0.1";

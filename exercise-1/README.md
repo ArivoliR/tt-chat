@@ -37,6 +37,13 @@ Starting off with g++, revising the compiler flags that I already know from my n
 
 The order would be: g++, make, sockets, memory management, git. I would comfortably assume I've understood something well enough when I'm able to explain it without double guessing myself, and use the concept/command without doubt. Rewriting code or trying commands out from tutorials, helps me. I did that with learncpp to learn c++ as well.
 
+## Reflections:
+- I felt prepared for most of the questions, since I was already familiar with some of the tools and I had a revision of the topics from good resources earlier this week. 
+- Some of the questions involving specific details were not very obvious especially in the sockets topic. I was not completely blindsided, but some specifics like the question on inet_pton were not obvious to me. 
+- Known Knowns - basic g++, make, git
+- Known Unknowns - Concepts like pointers, references, std::string are things I need to understand on a deeper level. I've never been able to be confident about pointers and references, but its rare that I make a mistake there.
+- Unknown unknowns - I did not know how much details were wrapped under socket programming. I should've spent more time there. Address structures, function signatures etc. I covered the basics, but only on a surface level. Should have gone deeper into what the argument types for functions are, and I did not plan to read the man pages properly, which was a blunder on my end. Luckily, was able to answer most of the questions. 
+
 ## Learning How to Learn
 
 - Answer the following questions in this file and commit and push your changes.

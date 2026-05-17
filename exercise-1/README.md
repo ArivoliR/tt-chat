@@ -184,11 +184,21 @@ SYNOPSIS
 - What happens when you iterate a pointer?
 - What are the most important safety tips to know when using pointers?
 
-
+#### Answers
+- The function call argument kServerAddress.c_str() is converting the IP address from `std::string` to a C-style string. Not sure exactly what the inet_pton call is doing, but an educated guess would be that it converts the server IP address into network form and stores it in address.sin_addr.
+- connect() commands the OS to connect my_sock socket to the server (pointed to by the variable `address`).
+- Pointer is a variable that stores a memory address. a reference is another name for an existing variable. 
+- It is better to use a pointer when the object can be null, and its useful when working with arrays and buffers etc, since it supports pointer arithmetic. 
+- It is better to use a reference when the object must exist and cannot/should not be null. 
+- C-style string is a null-terminated character array. std::string is a C++ class that manages string memory. 
+- C-style string is char*; sometimes const char*. (generally)
+- Iterating a pointer moves it throught memory by the size of the type it points to. For, example, a pointer pointing to an int, when incremented, moves by 4 bytes.
+- Initialize pointers before using them; do not use pointers after the object it is pointing to is destroyed.
 
 ## Learn Basics of Creating a C++ Project in Your IDE
 
 - How do you compile and run your project in your IDE?
+
 
 #### Answers 
 

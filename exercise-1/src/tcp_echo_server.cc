@@ -56,9 +56,9 @@ int main() {
       send(new_sock, buffer, read_size, 0);
       std::cout << "Echo message sent\n";
     }
+    close(new_sock);
   }
   // Close the socket
-  close(new_sock);
   close(my_sock);
   return 0;
 }

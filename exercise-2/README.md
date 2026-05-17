@@ -13,6 +13,9 @@
 - Or type `man 7 socket` in terminal
 - When would you want to use a `SOCK_RAW` stream?
 
+#### Answers 
+- SOCK_RAM stream is useful when we want low-level control over network packets. Useful when we want to build our own protocols. It is used by tools for network debugging, packet inspection among other use cases.
+
 ### TCP and IP Protocols
 - [IPv4](https://www.rfc-editor.org/info/rfc791) - Internet Protocol 
   specification defining packet structure and routing
@@ -35,6 +38,20 @@
 
 - Where do you find the spec for the HTTP protocol?
 - What about HTTPS? Is there a spec for that protocol?
+
+#### Answers 
+- No this is not the official final spec. It is a public working draft as clearly mentioned in the pdf itself. 
+- The official C++23 spec is the ISO C++23 standard.
+- The draft link is free, and close enough to be used for references. 
+- It is not beginner friendly, since it is written in formal language, but for learning new features of C++23 it is a very good source.
+- Yes compiler implementation differ from the C++ standard, due to various reasons like disagreements on the standard itself, and bugs. 
+- g++, clang, msvc are some of the most widely used C++ compilers.
+- C++26 specs' working draft can be found online in the ISO C++ website itself. 
+
+- From the RFC documents released by IETF. 
+- HTTPS is HTTP used with TLS (security layer). There is no separate spec for HTTPS. HTTP RFC and TLS RFC are the specs for HTTPS.
+
+
 
 ## Introduction to C++ and Sockets Programming
 
@@ -78,3 +95,5 @@
 
 - How do you see the memory layout of a `std::string` from your IDE debug mode?
 - How do you see the memory layout of a struct from your IDE debug mode?
+
+

@@ -133,7 +133,43 @@ The order would be: g++, make, sockets, memory management, git. I would comforta
 - How do you change the code to send to a IPv6 address instead of IPv4?
 - **Bonus**: How do you change the client code to connect by hostname instead
   of IP address?
-  
+
+#### Answers
+- Current issue in server code:
+```
+➜  build git:(main) ✗ ./server 
+Server listening on port 8080
+Received: aaaaaaaa
+Echo message sent
+Received: bbaaaaaa
+Echo message sent
+^C
+➜  build git:(main) ✗ ./client aaaaaaaa
+aaaaaaaa
+Sent: aaaaaaaa
+Received: aaaaaaaa
+➜  build git:(main) ✗ ./client bb      
+bb
+Sent: bb
+Received: bb
+```
+- The server reused the same buffer between reads, a shorter message sent could be attached with leftover characters from the previous message because of that. 
+- Fixed in commit "Fix stale buffer handling in TCP server"
+- They're used to share code across files through declarations of functions and variables.
+- ``<iostream>`` is for input output functions like std::cin and cout. `sys/socket.h` defines socket functions (lie socket(), connect(), send(), etc). `netinet/in.h` contains internet address structures like sockaddr_in and AF_INET. `arpa/inet.h` provides IP address conversion functions.
+- One way to do that, is to use `go to definition` shortcuts. In my neovim, that is mapped to the keybind `gd`. In vs-code you can right-click the variable or function name and the option to go to definition will pop up. For a external library, you can look up the man page of the function, and the Synopsis tab will include which header file it is defined in. Example:
+`man listen`
+```
+SYNOPSIS
+     #include <sys/socket.h>
+
+     int listen(int socket, int backlog);
+```
+- This can be done by changning server address to the target servers's IP address. localhost is `127.0.0.1`. 
+- To send a IPv6 address instead of IPv4 we should use AF_INET6 and sockaddr_in6 functions. 
+- getaddrinfo() can be used to connect by hostname instead of ip address. 
+
+
 ## Introduction to Memory Management
 
 - What is happening in line 26 of `tcp-echo-client.cc`? 
@@ -148,9 +184,13 @@ The order would be: g++, make, sockets, memory management, git. I would comforta
 - What happens when you iterate a pointer?
 - What are the most important safety tips to know when using pointers?
 
+
+
 ## Learn Basics of Creating a C++ Project in Your IDE
 
 - How do you compile and run your project in your IDE?
+
+#### Answers 
 
 ## Improving Interactions with LLMs
 
@@ -164,3 +204,5 @@ The order would be: g++, make, sockets, memory management, git. I would comforta
   to LLMs?
 - What is the difference between LLM and AI?
 - Is it grammatically correct in English to say "a LLM" or "an LLM"? Why?
+
+#### Answers

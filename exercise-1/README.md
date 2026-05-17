@@ -114,6 +114,11 @@ The order would be: g++, make, sockets, memory management, git. I would comforta
   everything is working?
 - What are the most important commands to know in git?
 
+#### Answers
+- It is important to keep each commit to a single task or question because it makes the history easier to understand. This directly helps with debugging bugs and code review. 
+- It is better to have small commits instead of one big commit. But there needs to be a balance; a commit for every small change would mean too many commits which again makes the repository history very cluttered and hard to work with. Every commit should have meaning to it. 
+- Important commands: git commit, push, pull, diff, status, add, checkout, log
+
 ## Introduction to Sockets
 
 - Read the code in `src/tcp-echo-client.cc` and add a way to change the 

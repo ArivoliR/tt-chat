@@ -47,10 +47,15 @@ int main() {
     }
     // Wait for read
     ssize_t read_size = read(new_sock, buffer, kBufferSize);
-    std::cout << "Received: " << buffer << "\n";
-    // Send reply
-    send(new_sock, buffer, read_size, 0);
-    std::cout << "Echo message sent" << "\n";
+    if (read_size > 0) {
+      std::cout << "Received: ";
+      std::cout.write(buffer, read_size);
+      std::cout << '\n';
+
+      // Send reply
+      send(new_sock, buffer, read_size, 0);
+      std::cout << "Echo message sent\n";
+    }
   }
   // Close the socket
   close(new_sock);

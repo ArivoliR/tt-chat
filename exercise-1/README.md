@@ -191,7 +191,7 @@ SYNOPSIS
 - It is better to use a pointer when the object can be null, and its useful when working with arrays and buffers etc, since it supports pointer arithmetic. 
 - It is better to use a reference when the object must exist and cannot/should not be null. 
 - C-style string is a null-terminated character array. std::string is a C++ class that manages string memory. 
-- C-style string is char*; sometimes const char*. (generally)
+- C-style string is char* (generally)
 - Iterating a pointer moves it throught memory by the size of the type it points to. For, example, a pointer pointing to an int, when incremented, moves by 4 bytes.
 - Initialize pointers before using them; do not use pointers after the object it is pointing to is destroyed.
 
@@ -199,8 +199,10 @@ SYNOPSIS
 
 - How do you compile and run your project in your IDE?
 
-
 #### Answers 
+- I use g++ on the command line to compile, and then use the CLI again to run the binary. 
+- Since I'm used to neovim, I do the same with the integrated terminal in vs-code as well.
+
 
 ## Improving Interactions with LLMs
 
@@ -216,3 +218,10 @@ SYNOPSIS
 - Is it grammatically correct in English to say "a LLM" or "an LLM"? Why?
 
 #### Answers
+
+- the man page the is the most authoritative source of information for socket(). 
+- The RFC documents are the most authoritative information about TCP and IP protocols. You can find them by googling. 
+- The ISO C++ standard is the most authoritative source of information for C++. cppreference is a useful resource but not an official source. 
+- Markdown helps structure the prompt, by giving it headings, sections, code blocks etc, making it easier for LLMs to parse.
+- LLM is a specific type of AI, that is focused on generating language. 
+- An LLM is grammatically correct. I think it is because of the way it is pronounced, not sure.  

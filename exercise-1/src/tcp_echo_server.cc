@@ -4,39 +4,51 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+sockaddr_in create_listen_address(int port) {
+  sockaddr_in address;
+  address.sin_family = AF_INET;
+  address.sin_addr.s_addr = INADDR_ANY;
+  address.sin_port = htons(port);
+
+  return address;
+}
+
 int main() {
   const int kPort = 8080;
-  sockaddr_in address;
-  socklen_t addr_len = sizeof(address);
   const int kBufferSize = 1024;
   char buffer[kBufferSize] = {0};
   int server_sock;
   int opt = 1;
+
+  sockaddr_in address = create_listen_address(kPort);
+  socklen_t addr_len = sizeof(address);
+
   // Creating socket file descriptor
   if ((server_sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
     std::cerr << "Socket creation erron\n";
     return -1;
   }
+
   // Attaching socket to port
   if (setsockopt(server_sock, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt,
                  sizeof(opt))) {
     std::cerr << "setsockopt error\n";
     return -1;
   }
-  address.sin_family = AF_INET;
-  address.sin_addr.s_addr = INADDR_ANY;
-  address.sin_port = htons(kPort);
+
   // Bind the socket to the network address and port
   if (bind(server_sock, (sockaddr *)&address, sizeof(address)) < 0) {
     std::cerr << "bind failed\n";
     return -1;
   }
+
   // Start listening for incoming connections
   if (listen(server_sock, 3) < 0) {
     std::cerr << "listen failed\n";
     return -1;
   }
   std::cout << "Server listening on port " << kPort << "\n";
+
   // Accept incoming connection
   int new_sock;
   while (true) {
@@ -45,6 +57,7 @@ int main() {
       std::cerr << "accept error\n";
       return -1;
     }
+
     // Wait for read
     ssize_t read_size = read(new_sock, buffer, kBufferSize);
     if (read_size > 0) {
@@ -58,6 +71,7 @@ int main() {
     }
     close(new_sock);
   }
+
   // Close the socket
   close(server_sock);
   return 0;

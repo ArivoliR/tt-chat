@@ -59,18 +59,33 @@
 - Are there any bugs in this code? 
 - What can you do to identify if there are bugs in the code?
 
+#### Answers
+- Yes there are a few bugs that I can notice in this code. 
+- Code does not check the return value of send(), we do not know if the full message was actually sent because of that. 
+- The client and server print the data received as C-style strings, but there is no null termination guarantee, can lead to Information leaks through buffer overflow attack. 
+- Edge case testing, running binary compiled with -Wall -WExtra, using gdb can be done to identify bugs in the code. 
+
 ## Refactoring: Extract Function
 
 - What is different in this code compared to exercise-1?
 - Is this code better or worse than exercise-1?
 - What are the tradeoffs compared to exercise-1?
 - Are you able to spot any mistakes or inconsistencies in the changes?
-  
+
+#### Answers 
+- The code in exercise 2 is more readable than exercise 1
+- There are more functions, and each function has its own reason to exist 
+- exercise 2's code is better for readability
+- The tradeoff is the lack of continuity in code since now we have to goto different functions to understand the program flow.
+- As mentioned in the previous section, I think the server and client printing th recieved data as a C-style string, even though read() doesn't terminate to nullbytes. It the is common case of buffer overflow. 
+
+
 ## Thinking About Performance
 
 - Does writing code this way have any impact on performance?
 - What do we mean when we say performance?
 - How do we measure performance in a program?
+
 
 ## Play with Git
 

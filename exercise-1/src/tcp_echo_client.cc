@@ -6,6 +6,15 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+int create_client_socket() {
+  int client_sock = socket(AF_INET, SOCK_STREAM, 0);
+  if (client_sock < 0) {
+    std::cerr << "Socket creation error\n";
+    return -1;
+  }
+  return client_sock;
+}
+
 int main(int argc, char *argv[]) {
   // #Question - are these the same type?
   //
@@ -19,7 +28,6 @@ int main(int argc, char *argv[]) {
   }
 
   std::string message = argv[1];
-
   std::cout << message << '\n';
 
   const int kPort = 8080;
@@ -27,12 +35,10 @@ int main(int argc, char *argv[]) {
   sockaddr_in address;
   const int kBufferSize = 1024;
   char buffer[kBufferSize] = {0};
+
   // Creating socket file descriptor
-  int client_sock = socket(AF_INET, SOCK_STREAM, 0);
-  if (client_sock < 0) {
-    std::cerr << "Socket creation erron\n";
-    return -1;
-  }
+  int client_sock = create_client_socket();
+
   address.sin_family = AF_INET;
   address.sin_port = htons(kPort);
   // Convert IPv4 and IPv6 addresses from text to binary form

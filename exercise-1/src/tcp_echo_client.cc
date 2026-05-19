@@ -28,8 +28,8 @@ int main(int argc, char *argv[]) {
   const int kBufferSize = 1024;
   char buffer[kBufferSize] = {0};
   // Creating socket file descriptor
-  int my_sock = socket(AF_INET, SOCK_STREAM, 0);
-  if (my_sock < 0) {
+  int client_sock = socket(AF_INET, SOCK_STREAM, 0);
+  if (client_sock < 0) {
     std::cerr << "Socket creation erron\n";
     return -1;
   }
@@ -41,17 +41,17 @@ int main(int argc, char *argv[]) {
     return -1;
   }
   // Connect to the server
-  if (connect(my_sock, (sockaddr *)&address, sizeof(address)) < 0) {
+  if (connect(client_sock, (sockaddr *)&address, sizeof(address)) < 0) {
     std::cerr << "Connection Failed\n";
     return -1;
   }
   // Send message
-  send(my_sock, message.c_str(), message.size(), 0);
+  send(client_sock, message.c_str(), message.size(), 0);
   std::cout << "Sent: " << message << "\n";
   // Wait for reply
-  ssize_t read_size = read(my_sock, buffer, kBufferSize);
+  ssize_t read_size = read(client_sock, buffer, kBufferSize);
   std::cout << "Received: " << buffer << "\n";
   // Close the socket
-  close(my_sock);
+  close(client_sock);
   return 0;
 }

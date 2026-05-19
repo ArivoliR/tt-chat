@@ -15,6 +15,18 @@ int create_client_socket() {
   return client_sock;
 }
 
+bool create_server_address(const std::string &server_address, int port,
+                           sockaddr_in &address) {
+  address.sin_family = AF_INET;
+  address.sin_port = htons(port);
+  // Convert IPv4 and IPv6 addresses from text to binary form
+  if (inet_pton(AF_INET, server_address.c_str(), &address.sin_addr) <= 0) {
+    std::cerr << "Invalid address/ Address not supported\n";
+    return false;
+  }
+  return true;
+}
+
 int main(int argc, char *argv[]) {
   // #Question - are these the same type?
   //
@@ -39,13 +51,11 @@ int main(int argc, char *argv[]) {
   // Creating socket file descriptor
   int client_sock = create_client_socket();
 
-  address.sin_family = AF_INET;
-  address.sin_port = htons(kPort);
-  // Convert IPv4 and IPv6 addresses from text to binary form
-  if (inet_pton(AF_INET, kServerAddress.c_str(), &address.sin_addr) <= 0) {
-    std::cerr << "Invalid address/ Address not supported\n";
-    return -1;
+  // Creating server address for client
+  if (!create_server_address(kServerAddress, kPort, address)) {
+    return 1;
   }
+
   // Connect to the server
   if (connect(client_sock, (sockaddr *)&address, sizeof(address)) < 0) {
     std::cerr << "Connection Failed\n";

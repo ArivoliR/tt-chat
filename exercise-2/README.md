@@ -86,6 +86,17 @@
 - What do we mean when we say performance?
 - How do we measure performance in a program?
 
+#### Answers
+- Since there are more functions now, their calls will add a small overhead.
+- A program's performance is how efficiently it can compute its task in the given environment. 
+- Performance is measured by timing, measurnig memory usage, cpu usage, latency, using profiling tools, throughput, scalability. 
+- To compare performance of exercise 1 and 2 important factors would be, latency (how long a request takes), memory usage, throughput (how many requests the server can handle in a second)
+- Did a simple benchmark for comparing latency and the results are:
+```
+exercise-1: 10000 requests, 17257.29 ms total, 1.726 ms/request
+exercise-2: 10000 requests, 17451.49 ms total, 1.745 ms/request
+```
+- This shows us that performance in terms of latency for both programs is almost the same, since the logic behind them is no different. 
 
 ## Play with Git
 

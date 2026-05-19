@@ -13,20 +13,28 @@ sockaddr_in create_listen_address(int port) {
   return address;
 }
 
+int create_server_socket() {
+  int server_sock = socket(AF_INET, SOCK_STREAM, 0);
+  if (server_sock < 0) {
+    std::cerr << "Socket creation error\n";
+    return -1;
+  }
+  return server_sock;
+}
+
 int main() {
   const int kPort = 8080;
   const int kBufferSize = 1024;
   char buffer[kBufferSize] = {0};
-  int server_sock;
   int opt = 1;
 
   sockaddr_in address = create_listen_address(kPort);
   socklen_t addr_len = sizeof(address);
 
   // Creating socket file descriptor
-  if ((server_sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
-    std::cerr << "Socket creation erron\n";
-    return -1;
+  int server_sock = create_server_socket();
+  if (server_sock < 0) {
+    return 1;
   }
 
   // Attaching socket to port

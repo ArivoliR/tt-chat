@@ -124,6 +124,15 @@ exercise-2: 10000 requests, 17451.49 ms total, 1.745 ms/request
 - In debug mode, how do you add a breakpoint?
 - In debug mode, how do you step through code?
 
+#### Answers
+- Debug configuration in the IDE with debug symbols enabled and either -O0 or -Og optimization level. 
+- vs code, In the debug session, right click variable -> then add to watch. 
+- watch \<expression\> on gdb for the same
+- b* addr on gdb, clicking next to line number on vs code and f9 or right click line and add breakpoint 
+- in gdb (with tui), ni for next instruction, c for continue (stops at breakpoint)
+- in vs code, we can click the buttons in the toolbar (step into, step over, step out)
+
+
 ### Memory Management and Debug Mode in Your IDE
 
 - How do you see the memory layout of a `std::string` from your IDE debug mode?

@@ -110,6 +110,13 @@ exercise-2: 10000 requests, 17451.49 ms total, 1.745 ms/request
 - How can you use `git tag` and `git branch` to make programming easier and
   more fun?
 
+#### Answers
+- git tag is a name attached to a marked commit (generally important for some specific reason)
+- git branch is different since it is the name of the current state of the codebase, and it keeps changing as more additions come to it.
+- tags stick to the commit that was marked, and can be used as points to revert to incase some additions or changes to the codebase go south 
+- We can use tags and branches to keep track of specific versions of the codebase that we want to come back to, both for reference, and in-case of issues that might want us to revert back to the older version
+- This gives us more freedom to play with the codebase, experiment complex changes, huge refactors and so on, without losing any previous progress.
+
 ## Learn Basics of Debugging in Your IDE
 
 - How do you enable debug mode in your IDE?

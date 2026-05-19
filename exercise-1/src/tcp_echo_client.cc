@@ -50,6 +50,9 @@ int main(int argc, char *argv[]) {
 
   // Creating socket file descriptor
   int client_sock = create_client_socket();
+  if (client_sock < 0) {
+    return 1;
+  }
 
   // Creating server address for client
   if (!create_server_address(kServerAddress, kPort, address)) {

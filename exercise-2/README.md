@@ -96,7 +96,7 @@
 exercise-1: 10000 requests, 17257.29 ms total, 1.726 ms/request
 exercise-2: 10000 requests, 17451.49 ms total, 1.745 ms/request
 ```
-- This shows us that performance in terms of latency for both programs is almost the same, since the logic behind them is no different. 
+- This shows us that performance in terms of latency for both programs is almost the same, since the logic behind them is no different. I ran this test a few times, similar results. Proves my first point that exercise-2 code will have a small overhead from the function calls :)
 
 ## Play with Git
 
@@ -130,7 +130,7 @@ exercise-2: 10000 requests, 17451.49 ms total, 1.745 ms/request
 - watch \<expression\> on gdb for the same
 - b* addr on gdb, clicking next to line number on vs code and f9 or right click line and add breakpoint 
 - in gdb (with tui), ni for next instruction, c for continue (stops at breakpoint)
-- in vs code, we can click the buttons in the toolbar (step into, step over, step out)
+- in vs code, we can click the buttons in the toolbar (step into F11, step over F10, step out Shift+F11)
 
 
 ### Memory Management and Debug Mode in Your IDE
@@ -138,4 +138,47 @@ exercise-2: 10000 requests, 17451.49 ms total, 1.745 ms/request
 - How do you see the memory layout of a `std::string` from your IDE debug mode?
 - How do you see the memory layout of a struct from your IDE debug mode?
 
+#### Answers 
+- After compiling in debug mode, set breakpoint after string is created, look at the variables to inspect `std::string` and use the memory view option to examine the address of the string object. I right click the variable and click go to memory to get the address. In gdb, I do x/s &varstr or x/16xb &varstr for string output and hex output.
+- Same for struct, compile in debug mode, right click the struct, click go to memory to find struct's address. View the struct members by right clicking struct variable and watching it. For direct memory layout- x/32xb struct
 
+```
+#include <iostream>
+#include <string>
+
+struct Student {
+  int age;
+  char grade;
+};
+
+int main() {
+  std::string str = "hello";
+
+  Student s{20, 'A'};
+
+  std::cout << str << "\n";
+  std::cout << s.age << " " << s.grade << " " << "\n";
+
+  return 0;
+}
+```
+`set breakpoint at return 0 (disas main to find address)`
+```
+(gdb) x/32xb &s
+0x7fffffffda28:	0x14	0x00	0x00	0x00	0x41	0x7f	0x00	0x00
+0x7fffffffda30:	0x40	0xda	0xff	0xff	0xff	0x7f	0x00	0x00
+0x7fffffffda38:	0x05	0x00	0x00	0x00	0x00	0x00	0x00	0x00
+0x7fffffffda40:	0x68	0x65	0x6c	0x6c	0x6f	0x00	0x00	0x00
+(gdb) x/32xb &str
+0x7fffffffda30:	0x40	0xda	0xff	0xff	0xff	0x7f	0x00	0x00
+0x7fffffffda38:	0x05	0x00	0x00	0x00	0x00	0x00	0x00	0x00
+0x7fffffffda40:	0x68	0x65	0x6c	0x6c	0x6f	0x00	0x00	0x00
+0x7fffffffda48:	0x2f	0x7c	0x8a	0xf7	0xff	0x7f	0x00	0x00
+(gdb) x/s str.c_str()
+0x7fffffffda40:	"hello"
+(gdb) x/1xb &s.grade
+0x7fffffffda2c:	0x41
+(gdb) p s.grade
+$1 = 65 'A'
+
+```

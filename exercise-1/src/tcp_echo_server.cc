@@ -56,7 +56,6 @@ int main() {
     return -1;
   }
   std::cout << "Server listening on port " << kPort << "\n";
-
   // Accept incoming connection
   int new_sock;
   while (true) {

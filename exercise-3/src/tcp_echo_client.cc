@@ -14,15 +14,22 @@ void check_error(bool test, std::string error_message) {
   }
 }
 
+void check_error(bool test, std::string error_message, int sock) {
+  if (test) {
+    close(sock);
+  }
+  check_error(test, error_message);
+}
+
 int create_socket() {
   int sock = socket(AF_INET, SOCK_STREAM, 0);
-  check_error(sock < 0, "Socket creation error\n");
+  check_error(sock < 0, "Socket creation error");
   return sock;
 }
 
 void set_binary_address(sockaddr_in &address, const std::string &server_ip) {
   auto err_code = inet_pton(AF_INET, server_ip.c_str(), &address.sin_addr);
-  check_error(err_code <= 0, "Invalid address/ Address not supported\n");
+  check_error(err_code <= 0, "Invalid address/ Address not supported");
 }
 
 sockaddr_in create_address(const std::string &server_ip, int port) {
@@ -37,7 +44,7 @@ sockaddr_in create_address(const std::string &server_ip, int port) {
 void connect_to_server(int sock, sockaddr_in &server_address) {
   auto err_code =
       connect(sock, (sockaddr *)&server_address, sizeof(server_address));
-  check_error(err_code < 0, "Connection Failed\n");
+  check_error(err_code < 0, "Connection Failed", sock);
 }
 
 void send_and_receive_message(int sock, const std::string &message) {
@@ -45,30 +52,25 @@ void send_and_receive_message(int sock, const std::string &message) {
   char buffer[kBufferSize] = {0};
 
   // Send the message to the server
-  send(sock, message.c_str(), message.size(), 0);
+  ssize_t send_size = send(sock, message.c_str(), message.size(), 0);
+  check_error(send_size < 0, "Send error", sock);
   std::cout << "Sent: " << message << "\n";
 
   // Receive response from the server
   ssize_t read_size = read(sock, buffer, kBufferSize);
+  check_error(read_size < 0, "Read error", sock);
   if (read_size > 0) {
-    std::cout << "Received: " << buffer << "\n";
+    std::cout << "Received: ";
+    std::cout.write(buffer, read_size);
+    std::cout << "\n";
   } else if (read_size == 0) {
     std::cout << "Server closed connection.\n";
-  } else {
-    std::cerr << "Read error\n";
   }
 }
 
 std::string read_args(int argc, char *argv[]) {
-  std::string message = "Hello from client";
-  if (argc == 1) {
-    std::cout << "Usage: " << argv[0] << " <message>\n";
-    exit(EXIT_FAILURE);
-  }
-  if (argc > 1) {
-    message = argv[1];
-  }
-  return message;
+  check_error(argc <= 1, "Usage: " + std::string(argv[0]) + " <message>");
+  return argv[1];
 }
 
 int main(int argc, char *argv[]) {

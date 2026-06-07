@@ -11,6 +11,11 @@
 - Are there any costs to writing code like this?
 - Apply `check_error` to all the code in `src/`
 
+### Answers
+- Benefits: Code has improved readability and is easier to debug. Also makes the code less likely to have human inconsistencies while coding (since the amount of code is less)
+- Function overloads let me add an overload such that I can use check_error that closes a socket (helps in server code)
+- Costs: Function call overheads
+
 ## Introduction to Compiler Explorer
 
 - Try out the old `create_socket()` and the new `check_error()` and 
@@ -26,6 +31,25 @@
   debugging mode from your IDE?
 - [x86 assembly reference](http://ref.x86asm.net/) - Comprehensive reference 
   for x86 assembly language instructions and syntax
+
+### Answers
+- In Compiler Explorer, the old `create_socket()` keeps the error handling
+  directly inside the function. The new version moves the repeated error check
+  into `check_error()`. At `-O0`, the generated assembly can show the extra
+  function call because the compiler preserves more structure for debugging.
+  At `-O3`, a small helper like `check_error()` will mostly be inlined, so the
+  generated code can become very similar.
+- Different approaches include using a macro, a lambda, a templated helper,
+  exceptions, returning an error value like `std::optional`, or wrapping the
+  socket in a small RAII class that closes automatically. For this exercise,
+  the simple helper function is the clearest approach.
+- To generate assembly from a Makefile, use `-S` so the compiler stops after
+  assembly generation. 
+- In VS Code you can view assembly through the debugger's disassembly view.
+  In GDB, commands like `disassemble` and `layout split` show
+  assembly.
+- in GDB, `si` steps one instruction 
+
 
 ## More About Memory Management
 
@@ -45,10 +69,29 @@
 - Does changing your optimization level in `CXXFLAGS` from `-O0` to `-O3` have
   any impact on the answers to any of the above questions?
 
+### Answers 
+- the flag fsanitize=address is for the AddressSanitizer. It catches memory bugs, like double free, use after free etc. 
+- CXX flags are used for compiling c++ code. LD flags are used by the linker to link the executable to shared libraries. 
+- std::string stores size, capacity and a pointer to a memory region that has characters stored there. 
+- std::string sometimes contains the text in the object itself (due to SSO for small strings), but generall it is stored on the heap and the object points to it.
+- std::optional<T> is a wrapper that has either no value or T. 
+- In gdb, x/32xb &optional_var can be used to inspect bytes or sizeof(std::optional<T?)
+- std::unique_ptr -> exclusive ownership
+- std::shared_ptr -> shared ownership 
+- std::weak_ptr -> non-owning reference to a shared ownership 
+- raw pointer -> non-owning access 
+
+- std::unique_ptr should be preferred (unless you need shared ownership)
+- Switching from O0 to O3 can make debugging harder since the optimized assembly inlines functions and variables that are present in code, do not necessarily exist outside. 
+
+
 ## More Thinking About Performance
 
 - After your experiments with Compiler Explorer, do you have any updates for
   your answers in exercise-2?
+
+### Answers 
+- Maybe inlining a few functions, not really something I realized because of godbolt though!
 
 ### Bonus: Do Not Watch Now 
 
